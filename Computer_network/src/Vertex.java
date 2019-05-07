@@ -3,13 +3,17 @@ import java.util.Objects;
 
 public class Vertex {
 
-    //@Pattern(regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])")
     private String ip;
 
     Vertex(String ip) {
-        if(validateIp(ip))
-        this.ip = ip;
+        if (validateIp(ip))
+            this.ip = ip;
     }
+
+    Vertex(Vertex vertex){
+        this.ip = vertex.ip;
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -36,8 +40,8 @@ public class Vertex {
     }
 
     void setIp(String ip) {
-        if(validateIp(ip))
-        this.ip = ip;
+        if (validateIp(ip))
+            this.ip = ip;
     }
 
     private boolean validateIp(String ip) throws IllegalArgumentException {
@@ -45,8 +49,8 @@ public class Vertex {
 
         String IP_REGEXP = zeroTo255 + "\\." + zeroTo255 + "\\."
                 + zeroTo255 + "\\." + zeroTo255;
-        if(ip == null || !ip.matches(IP_REGEXP))
-        throw new IllegalArgumentException();
+        if (ip == null || !ip.matches(IP_REGEXP))
+            throw new IllegalArgumentException();
         return true;
     }
 

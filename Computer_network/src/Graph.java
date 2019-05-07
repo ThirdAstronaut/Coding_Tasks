@@ -41,9 +41,9 @@ public class Graph {
      * @return true if addition was correct
      */
     boolean addEdge(String firstServer, String secondServer, long ping) {
+
         Vertex firstVertex = getVertexByIp(firstServer);
         Vertex secondVertex = getVertexByIp(secondServer);
-
 
         if (firstVertex != null && secondVertex != null && !firstServer.equals(secondServer)) {
             for (Edge edge : graphRepresentation.get(firstVertex)) {
@@ -59,13 +59,22 @@ public class Graph {
                     graphRepresentation.get((secondVertex)).remove(edge);
                 }
             }
-            graphRepresentation.get((secondVertex)).add(new Edge(secondVertex, firstVertex, ping));
+
+            Edge edge2 = new Edge(edgeToAdd);
+            switchSourceAndDestination(edge2);
+            graphRepresentation.get((secondVertex)).add(edge2);
             edges.add(edgeToAdd);
             return true;
         }
 
 
         return false;
+    }
+
+    private void switchSourceAndDestination(Edge edge2) {
+        Vertex tmp = edge2.getSource();
+        edge2.setSource(edge2.getDestination());
+        edge2.setDestination(tmp);
     }
 
     /**
@@ -117,6 +126,7 @@ public class Graph {
         for (Vertex vertex : graphRepresentation.keySet()) {
             visitedPingValue.put(vertex, Long.MAX_VALUE);
         }
+
         Vertex firstVertex = getVertexByIp(firstServer);
         visitedPingValue.put(firstVertex, 0L);
         previousVertex.put(firstVertex, null);
@@ -186,12 +196,11 @@ public class Graph {
         graph.addVertex("105.105.105.105");
 
         graph.addEdge("111.111.111.111", "222.222.222.222", 1L);
-        graph.addEdge("111.111.111.111", "111.111.111.111", 10L);
+        graph.addEdge("111.111.111.111", "103.103.103.103", 10L);
         graph.addEdge("222.222.222.222", "123.123.123.123", 2L);
         graph.addEdge("123.123.123.123", "103.103.103.103", 3L);
 
         System.out.println(graph.getPath("111.111.111.111", "103.103.103.103").getKey());
-        System.out.println(graph.getPath("111.111.111.111", "111.111.111.111").getKey());
         System.out.println(graph.getPath("111.111.111.111", "103.103.103.103").getValue().toString());
 
     }

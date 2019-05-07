@@ -3,10 +3,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
 public class GraphTest {
@@ -55,11 +56,18 @@ public class GraphTest {
     @Test
     public void addEdge() {
         Graph graph = new Graph();
-//Edge edge = new Edge();
-//Vertex vertex = new Vertex();
-//Vertex vertex1 = new Vertex();
-        //       assertFalse(addEdge());
+        Vertex v1 = new Vertex("111.111.111.111");
+        Vertex v2 = new Vertex("222.222.222.222");
+        String emptyString = "";
+        graph.getGraphRepresentation().put(v1, new HashSet<>());
+        graph.getGraphRepresentation().put(v2, new HashSet<>());
+        assertTrue(graph.addEdge(v1.getIp(), v2.getIp(), 10L));
+        assertTrue(graph.addEdge(v1.getIp(), v2.getIp(), 10L));
+        assertFalse(graph.addEdge(v1.getIp(), emptyString, 10L));
+        assertFalse(graph.addEdge(v1.getIp(), v1.getIp(), 10L));
     }
+
+
 
     @Test
     public void getVertex() {

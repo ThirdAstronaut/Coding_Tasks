@@ -12,6 +12,12 @@ public class Edge {
         this.ping = ping;
     }
 
+    Edge(Edge edge){
+        this.ping = edge.ping;
+        this.source = new Vertex(edge.source);
+        this.destination = new Vertex(edge.destination);
+    }
+
     Vertex getDestination() {
         return destination;
     }
@@ -55,4 +61,5 @@ public class Edge {
     public final int hashCode() {
         return Objects.hash(destination, source, ping);
     }
-}
+
+    }
